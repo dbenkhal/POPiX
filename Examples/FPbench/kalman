@@ -1,0 +1,116 @@
+create_array(x, 30);
+create_array(y,30);
+
+/*x frand() values */
+x[0]  = 0.680375;
+ x[1] = -0.211234; 
+ x[2] = 0.566198;
+ x[3] = 0.596880;
+ x[4] = 0.823295; 
+ x[5] = -0.604897; 
+ x[6] = -0.329554; 
+ x[7] = 0.536459;
+ x[8] = -0.444451; 
+ x[9] = 0.107940; 
+ x[10] = -0.045206; 
+ x[11] = 0.257742; 
+ x[12] = -0.270431; 
+ x[13] = 0.026802;
+ x[14] = 0.904459; 
+ x[15] = 0.832390; 
+ x[16] = 0.271423; 
+ x[17] = 0.434594;
+ x[18] = -0.716795; 
+ x[19] = 0.213938; 
+ x[20] = -0.967399; 
+ x[21] = -0.514226; 
+ x[22] = -0.725537; 
+ x[23] = 0.608354; 
+ x[24] = -0.686642; 
+ x[25] = -0.198111; 
+ x[26] = -0.740419; 
+ x[27] = -0.782382; 
+ x[28] = 0.997849; 
+ x[29] = -0.563486; 
+ 
+/*y frand() values */
+ y[0] = 0.025865; 
+ y[1] = 0.678224;
+ y[2] = 0.225280; 
+ y[3] = -0.407937; 
+ y[4] = 0.275105; 
+ y[5] = 0.048574; 
+ y[6] = -0.012834; 
+ y[7] = 0.945550; 
+ y[8] = -0.414966; 
+ y[9] = 0.542715; 
+ y[10] = 0.053490; 
+ y[11] = 0.539828; 
+ y[12] = -0.199543; 
+ y[13] = 0.783059; 
+ y[14] = -0.433371; 
+ y[15] = -0.295083; 
+ y[16] = 0.615449; 
+ y[17] = 0.838053; 
+ y[18] = -0.860489; 
+ y[19] = 0.898654; 
+ y[20] = 0.051991; 
+ y[21] = -0.827888; 
+ y[22] = -0.615572; 
+ y[23] = 0.326454; 
+ y[24] = 0.780465; 
+ y[25] = -0.302214; 
+ y[26] = -0.871657; 
+ y[27] = -0.959954; 
+ y[28] = -0.084597; 
+ y[29] = -0.873808; 
+ 
+ /*initial values for the kalman filter*/
+  x_est_last = 0.0;
+  P_last = 0.0;
+ /*the noise in the systemµ/
+  Q = 0.022;
+  R = 0.617;
+  K = 0.0;
+  P = 0.0;
+  P_temp = 0.0;
+  x_temp_est = 0.0;
+  x_est = 0.0;
+  z_measured = 0.0; /*the noisy value we measured*/
+  z_real = 0.5; /*the ideal value we wish to measure*/
+  i =0.0;
+  j = 0.0;
+  /*initialize with a measurement*/
+    while(i<30.0){ 
+    	x_est_last = z_real + x[i]*0.09;
+   	  	sum_error_kalman = 0.0;
+     	sum_error_measure = 0.0;
+     	
+		while(j<30.0) {
+		
+        	/*do a prediction*/
+        	x_temp_est = x_est_last;
+        	P_temp = P_last +  0.022;
+        	/*calculate the Kalman gain*/
+        	K = P_temp * (1.0/(P_temp + 0.617));
+        	
+        	/*measure*/
+        	z_measured = z_real + y[j]*0.09; /*the real measurement plus noise
+        	
+       	   /*correct*/
+        	x_est = x_temp_est + K * (z_measured - x_temp_est); 
+       		 P = (1.0- K) * P_temp;
+       		 
+       	   /*we have our new system*/
+         	sum_error_kalman = sum_error_kalman + z_real - x_est;
+        	sum_error_measure =  sum_error_measure  + z_real-z_measured;
+        	
+          /*update our last's*/
+        	P_last = P;
+        	x_est_last = x_est;
+           j = j + 1.0;
+   };
+   i = i + 1.0;
+    	};
+  
+require_nsb(sum_error_kalman,30);

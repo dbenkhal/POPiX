@@ -1,0 +1,8 @@
+ radius = 4.0;
+ theta = 249.0;
+ pi = 3.1415927;
+ tmp_fix_1 = pi / 180.0;
+ radiant = theta * tmp_fix_1;
+ tmp_fix_1 = sin(radiant);
+ res = radius * tmp_fix_1;
+ require_nsb(res,20);

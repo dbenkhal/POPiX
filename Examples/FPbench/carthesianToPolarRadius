@@ -1,0 +1,7 @@
+ x = 50.0;
+ y= 50.0;
+ tmp_fix_1 = x * x;
+ tmp_fix_2 = y * y;
+ tmp_fix_3 = tmp_fix_1 + tmp_fix_2;
+ res = sqrt(tmp_fix_3);
+ require_nsb(res,16);

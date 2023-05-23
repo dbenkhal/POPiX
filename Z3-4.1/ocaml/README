@@ -1,0 +1,16 @@
+The OCAML API for Z3 was tested using OCaml 3.12.1.
+
+- To download OCaml
+  http://caml.inria.fr/ocaml/      
+
+- To build the OCaml API for Z3
+  .\build.cmd
+
+Remark: The Microsoft C compiler tool chain must be in your path,
+or you can use the Visual Studio Command Prompt.
+
+Acknowledgements:
+The OCaml interface for Z3 was written by Josh Berdine and Jakob Lichtenberg. 
+Many thanks to them!
+
+   

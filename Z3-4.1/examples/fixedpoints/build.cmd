@@ -1,0 +1,1 @@
+cl /MD /I ..\..\include test_fixedpoints.cpp bdd_table.cpp test_bdd_table.cpp hello_fixedpoints.cpp   /link /LTCG ..\..\bin\z3.lib buddy\buddy.lib 

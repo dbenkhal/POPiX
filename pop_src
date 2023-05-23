@@ -1,0 +1,22 @@
+     a = 0.0;
+     b = 3.1415922654;
+     h = 0.01;
+     fa = sin(a);
+     fb = sin(b);
+     tmp = a+h/2.0;
+     fc= sin(tmp);
+     intgl = fa+fb;
+     intgl = intgl / 2.0;
+     intgl = intgl+ 2.0*fc;
+     x = a + h;
+
+     while (x<b) {
+         x_mid = x + h / 2.0;
+         fx = sin(x);
+         fxm = sin(x_mid);
+         intgl = intgl + fx + 2.0 * fxm;
+         x = x + h ;
+     };
+     intgl = intgl * h / 3.0;
+     require_nsb(intgl,20);
+}

@@ -1,0 +1,13 @@
+ v = 0.25;
+ p = 3500.0;
+ a = 0.401;
+ b = 0.0000427;
+ n= 1000.0;
+ tmp1 = n /v;
+ tmp2 = n * b;
+ tmp3 = a * tmp1;
+ tmp4 = tmp3 * tmp1;
+ tmp5 = p + tmp4;
+ tmp6 = v - tmp2;
+ res = tmp5 * tmp6;
+ require_nsb(res,22);

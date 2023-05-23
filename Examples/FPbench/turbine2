@@ -1,0 +1,16 @@
+ v = -4.0; 
+ w = 0.5; 
+ r = 5.0;
+ res2 = 0.0;
+ tmp_fix_1 = w * w;
+ tmp_fix_2 = tmp_fix_1 * r;
+ tmp_fix_3 = tmp_fix_2 * r;
+ tmp_fix_4 = 0.5 * v;
+ tmp_fix_5 = tmp_fix_4 * tmp_fix_3;
+ tmp_fix_6 = 1.0 - v;
+ tmp_fix_7 = 6.0 * v;
+ tmp_fix_8 = tmp_fix_5 / tmp_fix_6;
+ tmp_fix_9 = tmp_fix_7 - tmp_fix_8;
+ res = tmp_fix_9 - 2.5;
+ res2= res2 + res;
+ require_nsb(res2,23);

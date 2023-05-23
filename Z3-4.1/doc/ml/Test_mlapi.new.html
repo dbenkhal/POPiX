@@ -1,0 +1,30 @@
+<pre><span id="VALprove"><span class="keyword">val</span> <a href="code_VALTest_mlapi.prove.html">prove</a></span> : <code class="type"><a href="Z3.html#TYPEcontext">context</a> -> <a href="Z3.html#TYPEsolver">solver</a> -> <a href="Z3.html#TYPEast">ast</a> -> bool -> unit</code></pre><div class="info">
+Prove that the constraints already asserted into the logical
+   context implies the given formula.  The result of the proof is
+   displayed.
+   Z3 is a satisfiability checker. So, one can prove <em>f </em> by showing
+   that <em>(not f) </em> is unsatisfiable.
+   The context <em>ctx </em> is not modified by this function.<br>
+</div>
+<br><code><span id="TYPEtree"><span class="keyword">type</span> <code class="type"></code>tree</span> = </code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Leaf</span> <span class="keyword">of</span> <code class="type">int</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Node</span> <span class="keyword">of</span> <code class="type"><a href="Test_mlapi.html#TYPEforest">forest</a></code></code></td>
+
+</tr></table>
+
+
+<pre><span id="TYPEforest"><span class="keyword">type</span> <code class="type"></code>forest</span> = <code class="type"><a href="Test_mlapi.html#TYPEtree">tree</a> list</code> </pre>
+
+<pre><span id="VALforest_example"><span class="keyword">val</span> <a href="code_VALTest_mlapi.forest_example.html">forest_example</a></span> : <code class="type">unit -> unit</code></pre><div class="info">
+Demonstrates the usage of <a href="Z3.html#VALmk_datatypes"><code class="code">mk_datatypes</code></a> with an example of forests of trees.<br>
+</div>

@@ -1,0 +1,65 @@
+ <HTML>
+    <HEAD>
+    <meta name="author" content="Leonardo de Moura" />
+    <meta name="author" content="Nikolaj Bjorner" />
+    <meta name="description" content="Z3: SMT solver" />
+    <meta name="keywords" content="decision procedure, theorem prover, SMT-LIB, SMTLIB, SMT LIB, SMT Solver, SMTCOMP, SMT-COMP, SAT solver, formal methods, constraint solver, software verification, hardware verification" />
+      <TITLE>Z3: SMT solver</TITLE>
+      <LINK HREF="z3_ml.css" REL="stylesheet" TYPE="text/css">
+      <LINK href="tabs.css" rel="stylesheet" type="text/css">
+    </HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<table class="centered-small">
+  <tr>
+    <th><a href="../index.html"><span>Home</span></a></th>
+    <th> &bull; </th>
+    <th><a href="../documentation.html"><span>Docs</span></a></th>
+    <th> &bull; </th>
+    <th><a href="../download.html"><span>Download</span></a></th>
+    <th> &bull; </th>
+    <th><a href="../mail.html"><span>Mail</span></a></th>
+    <th> &bull; </th>
+    <th><a href="../faq.html"><span>FAQ</span></a></th>
+    <th> &bull; </th>
+    <th><a href="../awards.html"><span>Awards</span></a></th>
+    <th> &bull; </th>
+    <th><a href="../status.html"><span>Status</span></a></th>
+    <th> &bull; </th>
+    <th><a href="http://research.microsoft.com"><span>MSR</span></a></th>
+  </tr>
+</table>
+<p class="Z3Title"><img align="middle" src="z3.png" alt="Z3" />An Efficient SMT Solver</p>
+<h1>OCaml API examples (<a href="index_values.html" class="el">Index</a>)</h1>
+<pre><span id="VALprove"><span class="keyword">val</span> <a href="code_VALTest_mlapi.prove.html">prove</a></span> : <code class="type"><a href="Z3.html#TYPEcontext">context</a> -> <a href="Z3.html#TYPEsolver">solver</a> -> <a href="Z3.html#TYPEast">ast</a> -> bool -> unit</code></pre><div class="info">
+Prove that the constraints already asserted into the logical
+   context implies the given formula.  The result of the proof is
+   displayed.
+   Z3 is a satisfiability checker. So, one can prove <em>f </em> by showing
+   that <em>(not f) </em> is unsatisfiable.
+   The context <em>ctx </em> is not modified by this function.<br>
+</div>
+<br><code><span id="TYPEtree"><span class="keyword">type</span> <code class="type"></code>tree</span> = </code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Leaf</span> <span class="keyword">of</span> <code class="type">int</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Node</span> <span class="keyword">of</span> <code class="type"><a href="Test_mlapi.html#TYPEforest">forest</a></code></code></td>
+
+</tr></table>
+
+
+<pre><span id="TYPEforest"><span class="keyword">type</span> <code class="type"></code>forest</span> = <code class="type"><a href="Test_mlapi.html#TYPEtree">tree</a> list</code> </pre>
+
+<pre><span id="VALforest_example"><span class="keyword">val</span> <a href="code_VALTest_mlapi.forest_example.html">forest_example</a></span> : <code class="type">unit -> unit</code></pre><div class="info">
+Demonstrates the usage of <a href="Z3.html#VALmk_datatypes"><code class="code">mk_datatypes</code></a> with an example of forests of trees.<br>
+</div>
+<hr>
+</BODY>
+</HTML>

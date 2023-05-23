@@ -1,0 +1,40 @@
+/***********************************/
+/* Arclength                       */
+/***********************************/
+
+d1 = 1.0;
+s1=0.0;
+t1=0.0;
+h = 0.000003141592654;
+i = 1.0;
+while (i < 2.0){
+  t1 = i * h;
+  x = i * h;
+  d1 =0.5 * d1 ;
+  aux1 =  sin(d1 * x) ;
+  t1 = t1 + aux1 * d1;
+
+  d2 =0.5 * d1 ;
+  aux2= sin(d2 * x);
+  t2 = t1 + aux2 *d2;
+
+  d3 = 0.5 * d2;
+  aux3 = sin(d3 * x) ;
+  t3 = t2 + aux3 *d3;
+
+  d4 = 0.5 * d3;
+  aux4 =sin(d4 * x);
+  t4 = t3 + aux4* d4;
+
+  d5 = 0.5 * d4;
+  aux5 = sin(d5 * x);
+  t5 = t4 + aux5* d5;
+  aux6 = t5 - t1;
+  h2 = h * h;
+  aux66 = aux6 * aux6;
+  racine = sqrt(h2 + aux66);
+  s1 = s1 + racine ;
+  t1 = t5;
+  i = i + 1.0;
+};
+require_nsb(s1, 15);

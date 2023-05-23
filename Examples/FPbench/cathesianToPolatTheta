@@ -1,0 +1,8 @@
+ x = 50.0;
+ y = 50.0;
+ pi = 3.1415927;
+ tmp_fix_1 = y /x;
+ radiant = atan(tmp_fix_1);
+ tmp_fix_2 = 180.0/pi;
+ res = radiant * tmp_fix_2;
+ require_nsb(res,16);

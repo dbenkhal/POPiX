@@ -1,0 +1,23 @@
+/***********************************/
+/* Pendulum                        */
+/***********************************/
+
+/*The movement of a pendulum*/
+g = 9.81; /*gravitational constant*/
+l = 0.5; /*pendulum length*/
+y1 = 0.785398; /*first variable of differential system*/
+y2 =  0.785398; /*second variable of differential system*/
+h = 0.1;/*integration step*/
+t = 0.0; /* time*/
+y1new = 0.0; 
+y2new = 0.0;
+while (t<1.0) {
+    y1new = y1 + y2 * h ;
+    aux1 = sin(y1) ;
+    aux2 = aux1 * h * g / l;
+    y2new = y2 - aux2;
+    t = t + h;
+    y1 = y1new;
+    y2 = y2new;
+};
+require_nsb(y2,20);

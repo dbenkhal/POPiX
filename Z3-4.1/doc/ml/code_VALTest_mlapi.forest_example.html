@@ -1,0 +1,108 @@
+<html><head>
+<link rel="stylesheet" href="z3_ml.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Test_mlapi" rel="Chapter" href="Test_mlapi.html">
+<link title="Z3" rel="Chapter" href="Z3.html"><title>Test_mlapi.forest_example</title>
+</head>
+<body>
+<code class="code"><span class="keyword">let</span>&nbsp;forest_example&nbsp;()&nbsp;=<br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;ctx&nbsp;=&nbsp;<span class="constructor">Z3</span>.mk_context&nbsp;[]&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;slv&nbsp;=&nbsp;<span class="constructor">Z3</span>.mk_solver&nbsp;ctx<br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;int_sort&nbsp;=&nbsp;<span class="constructor">Z3</span>.mk_int_sort&nbsp;ctx&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;sym&nbsp;name&nbsp;=&nbsp;<span class="constructor">Z3</span>.mk_string_symbol&nbsp;ctx&nbsp;name<br>
+&nbsp;&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;<span class="comment">(*&nbsp;n-ary&nbsp;trees&nbsp;and&nbsp;forests&nbsp;in&nbsp;Z3&nbsp;*)</span><br>
+&nbsp;&nbsp;<span class="keyword">match</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;mk_datatypes&nbsp;ctx<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="keyword">function</span>&nbsp;[|tree;&nbsp;forest|]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Some</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[|(sym<span class="string">"tree"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[|{<span class="constructor">Z3</span>.constructor_desc=&nbsp;sym<span class="string">"leaf"</span>;&nbsp;recognizer_desc=&nbsp;sym<span class="string">"is_leaf"</span>;&nbsp;accessor_descs=&nbsp;[|(sym<span class="string">"data"</span>,&nbsp;int_sort)|]};<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<span class="constructor">Z3</span>.constructor_desc=&nbsp;sym<span class="string">"node"</span>;&nbsp;recognizer_desc=&nbsp;sym<span class="string">"is_node"</span>;&nbsp;accessor_descs=&nbsp;[|(sym<span class="string">"children"</span>,&nbsp;forest)|]}|]);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(sym<span class="string">"forest"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[|{<span class="constructor">Z3</span>.constructor_desc=&nbsp;sym<span class="string">"nil"</span>&nbsp;;&nbsp;recognizer_desc=&nbsp;sym<span class="string">"is_nil"</span>&nbsp;;&nbsp;accessor_descs=&nbsp;[||]};<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<span class="constructor">Z3</span>.constructor_desc=&nbsp;sym<span class="string">"cons"</span>;&nbsp;recognizer_desc=&nbsp;sym<span class="string">"is_cons"</span>;&nbsp;accessor_descs=&nbsp;[|(sym<span class="string">"hd"</span>,&nbsp;tree);&nbsp;(sym<span class="string">"tl"</span>,&nbsp;forest)|]}|])|]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">None</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>
+&nbsp;&nbsp;<span class="keyword">with</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;[|(tree,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[|{<span class="constructor">Z3</span>.constructor=&nbsp;leaf;&nbsp;recognizer=&nbsp;is_leaf;&nbsp;accessors=&nbsp;[|data|]};<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<span class="constructor">Z3</span>.constructor=&nbsp;node;&nbsp;recognizer=&nbsp;is_node;&nbsp;accessors=&nbsp;[|children|]}|]);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(forest,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[|{<span class="constructor">Z3</span>.constructor=&nbsp;nil&nbsp;;&nbsp;recognizer=&nbsp;is_nil&nbsp;;&nbsp;accessors=&nbsp;[||]};<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<span class="constructor">Z3</span>.constructor=&nbsp;cons;&nbsp;recognizer=&nbsp;is_cons;&nbsp;accessors=&nbsp;[|hd;&nbsp;tl|]}|])|]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;translate&nbsp;from&nbsp;OCaml&nbsp;to&nbsp;Z3&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;<span class="keyword">rec</span>&nbsp;ml2z3_tree&nbsp;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Leaf</span>(i)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Z3</span>.mk_app&nbsp;ctx&nbsp;leaf&nbsp;[|<span class="constructor">Z3</span>.mk_int&nbsp;ctx&nbsp;i&nbsp;(<span class="constructor">Z3</span>.mk_int_sort&nbsp;ctx)|]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Node</span>(f)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Z3</span>.mk_app&nbsp;ctx&nbsp;node&nbsp;[|ml2z3_forest&nbsp;f|]<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">and</span>&nbsp;ml2z3_forest&nbsp;=&nbsp;<span class="keyword">function</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;[]&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Z3</span>.mk_app&nbsp;ctx&nbsp;nil&nbsp;[||]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;t&nbsp;::&nbsp;f&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Z3</span>.mk_app&nbsp;ctx&nbsp;cons&nbsp;[|ml2z3_tree&nbsp;t;&nbsp;ml2z3_forest&nbsp;f|]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">in</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;construct&nbsp;some&nbsp;OCaml&nbsp;trees&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;t0&nbsp;=&nbsp;<span class="constructor">Leaf</span>&nbsp;0&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;t12&nbsp;=&nbsp;<span class="constructor">Node</span>&nbsp;[<span class="constructor">Leaf</span>&nbsp;1;&nbsp;<span class="constructor">Leaf</span>&nbsp;2]&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;t123&nbsp;=&nbsp;<span class="constructor">Node</span>&nbsp;[t12;&nbsp;<span class="constructor">Leaf</span>&nbsp;3]&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;t1212&nbsp;=&nbsp;<span class="constructor">Node</span>&nbsp;[t12;&nbsp;t12]&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;t412&nbsp;=&nbsp;<span class="constructor">Node</span>&nbsp;[<span class="constructor">Leaf</span>&nbsp;4;&nbsp;t12]&nbsp;<span class="keyword">in</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;construct&nbsp;some&nbsp;Z3&nbsp;trees&nbsp;using&nbsp;the&nbsp;translation&nbsp;from&nbsp;OCaml&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;t1&nbsp;=&nbsp;ml2z3_tree&nbsp;t12&nbsp;<span class="keyword">in</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf&nbsp;<span class="string">"t1:&nbsp;%s\n%!"</span>&nbsp;(<span class="constructor">Z3</span>.ast_to_string&nbsp;ctx&nbsp;t1)&nbsp;;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;t2&nbsp;=&nbsp;ml2z3_tree&nbsp;t123&nbsp;<span class="keyword">in</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf&nbsp;<span class="string">"t2:&nbsp;%s\n%!"</span>&nbsp;(<span class="constructor">Z3</span>.ast_to_string&nbsp;ctx&nbsp;t2)&nbsp;;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;t3&nbsp;=&nbsp;ml2z3_tree&nbsp;t1212&nbsp;<span class="keyword">in</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf&nbsp;<span class="string">"t3:&nbsp;%s\n%!"</span>&nbsp;(<span class="constructor">Z3</span>.ast_to_string&nbsp;ctx&nbsp;t3)&nbsp;;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;t4&nbsp;=&nbsp;ml2z3_tree&nbsp;t412&nbsp;<span class="keyword">in</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf&nbsp;<span class="string">"t4:&nbsp;%s\n%!"</span>&nbsp;(<span class="constructor">Z3</span>.ast_to_string&nbsp;ctx&nbsp;t4)&nbsp;;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f1&nbsp;=&nbsp;ml2z3_forest&nbsp;[t0]&nbsp;<span class="keyword">in</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf&nbsp;<span class="string">"f1:&nbsp;%s\n%!"</span>&nbsp;(<span class="constructor">Z3</span>.ast_to_string&nbsp;ctx&nbsp;f1)&nbsp;;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f2&nbsp;=&nbsp;ml2z3_forest&nbsp;[t12]&nbsp;<span class="keyword">in</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf&nbsp;<span class="string">"f2:&nbsp;%s\n%!"</span>&nbsp;(<span class="constructor">Z3</span>.ast_to_string&nbsp;ctx&nbsp;f2)&nbsp;;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f3&nbsp;=&nbsp;ml2z3_forest&nbsp;[t12;&nbsp;t0]&nbsp;<span class="keyword">in</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf&nbsp;<span class="string">"f3:&nbsp;%s\n%!"</span>&nbsp;(<span class="constructor">Z3</span>.ast_to_string&nbsp;ctx&nbsp;f3)&nbsp;;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;or&nbsp;using&nbsp;the&nbsp;Z3&nbsp;API&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;nil&nbsp;=&nbsp;<span class="constructor">Z3</span>.mk_app&nbsp;ctx&nbsp;nil&nbsp;[||]&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;cons&nbsp;t&nbsp;f&nbsp;=&nbsp;<span class="constructor">Z3</span>.mk_app&nbsp;ctx&nbsp;cons&nbsp;[|t;&nbsp;f|]&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;leaf&nbsp;i&nbsp;=&nbsp;<span class="constructor">Z3</span>.mk_app&nbsp;ctx&nbsp;leaf&nbsp;[|<span class="constructor">Z3</span>.mk_int&nbsp;ctx&nbsp;i&nbsp;(<span class="constructor">Z3</span>.mk_int_sort&nbsp;ctx)|]&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;node&nbsp;f&nbsp;=&nbsp;<span class="constructor">Z3</span>.mk_app&nbsp;ctx&nbsp;node&nbsp;[|f|]&nbsp;<span class="keyword">in</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;t0&nbsp;=&nbsp;leaf&nbsp;0&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;t12&nbsp;=&nbsp;node&nbsp;(cons&nbsp;(leaf&nbsp;1)&nbsp;(cons&nbsp;(leaf&nbsp;2)&nbsp;nil))&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;t123&nbsp;=&nbsp;node&nbsp;(cons&nbsp;t12&nbsp;(cons&nbsp;(leaf&nbsp;3)&nbsp;nil))&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;t1212&nbsp;=&nbsp;node&nbsp;(cons&nbsp;t12&nbsp;(cons&nbsp;t12&nbsp;nil))&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;t412&nbsp;=&nbsp;node&nbsp;(cons&nbsp;(leaf&nbsp;4)&nbsp;(cons&nbsp;t12&nbsp;nil))&nbsp;<span class="keyword">in</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;t1&nbsp;=&nbsp;t12&nbsp;<span class="keyword">in</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf&nbsp;<span class="string">"t1:&nbsp;%s\n%!"</span>&nbsp;(<span class="constructor">Z3</span>.ast_to_string&nbsp;ctx&nbsp;t1)&nbsp;;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;t2&nbsp;=&nbsp;t123&nbsp;<span class="keyword">in</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf&nbsp;<span class="string">"t2:&nbsp;%s\n%!"</span>&nbsp;(<span class="constructor">Z3</span>.ast_to_string&nbsp;ctx&nbsp;t2)&nbsp;;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;t3&nbsp;=&nbsp;t1212&nbsp;<span class="keyword">in</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf&nbsp;<span class="string">"t3:&nbsp;%s\n%!"</span>&nbsp;(<span class="constructor">Z3</span>.ast_to_string&nbsp;ctx&nbsp;t3)&nbsp;;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;t4&nbsp;=&nbsp;t412&nbsp;<span class="keyword">in</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf&nbsp;<span class="string">"t4:&nbsp;%s\n%!"</span>&nbsp;(<span class="constructor">Z3</span>.ast_to_string&nbsp;ctx&nbsp;t4)&nbsp;;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f1&nbsp;=&nbsp;cons&nbsp;t0&nbsp;nil&nbsp;<span class="keyword">in</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf&nbsp;<span class="string">"f1:&nbsp;%s\n%!"</span>&nbsp;(<span class="constructor">Z3</span>.ast_to_string&nbsp;ctx&nbsp;f1)&nbsp;;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f2&nbsp;=&nbsp;cons&nbsp;t12&nbsp;nil&nbsp;<span class="keyword">in</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf&nbsp;<span class="string">"f2:&nbsp;%s\n%!"</span>&nbsp;(<span class="constructor">Z3</span>.ast_to_string&nbsp;ctx&nbsp;f2)&nbsp;;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;f3&nbsp;=&nbsp;cons&nbsp;t12&nbsp;f1&nbsp;<span class="keyword">in</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf&nbsp;<span class="string">"f3:&nbsp;%s\n%!"</span>&nbsp;(<span class="constructor">Z3</span>.ast_to_string&nbsp;ctx&nbsp;f3)&nbsp;;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;nil&nbsp;!=&nbsp;cons(nil,nil)&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prove&nbsp;ctx&nbsp;slv&nbsp;(<span class="constructor">Z3</span>.mk_not&nbsp;ctx&nbsp;(<span class="constructor">Z3</span>.mk_eq&nbsp;ctx&nbsp;nil&nbsp;f1))&nbsp;<span class="keyword">true</span>&nbsp;;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prove&nbsp;ctx&nbsp;slv&nbsp;(<span class="constructor">Z3</span>.mk_not&nbsp;ctx&nbsp;(<span class="constructor">Z3</span>.mk_eq&nbsp;ctx&nbsp;(leaf&nbsp;5)&nbsp;t1))&nbsp;<span class="keyword">true</span>&nbsp;;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;cons(x,u)&nbsp;=&nbsp;cons(x,&nbsp;v)&nbsp;=&gt;&nbsp;u&nbsp;=&nbsp;v&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;u&nbsp;=&nbsp;mk_var&nbsp;ctx&nbsp;<span class="string">"u"</span>&nbsp;forest&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;v&nbsp;=&nbsp;mk_var&nbsp;ctx&nbsp;<span class="string">"v"</span>&nbsp;forest&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;x&nbsp;=&nbsp;mk_var&nbsp;ctx&nbsp;<span class="string">"x"</span>&nbsp;tree&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;y&nbsp;=&nbsp;mk_var&nbsp;ctx&nbsp;<span class="string">"y"</span>&nbsp;tree&nbsp;<span class="keyword">in</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;l1&nbsp;=&nbsp;cons&nbsp;x&nbsp;u&nbsp;<span class="keyword">in</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf&nbsp;<span class="string">"l1:&nbsp;%s\n%!"</span>&nbsp;(<span class="constructor">Z3</span>.ast_to_string&nbsp;ctx&nbsp;l1)&nbsp;;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span>&nbsp;l2&nbsp;=&nbsp;cons&nbsp;y&nbsp;v&nbsp;<span class="keyword">in</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf&nbsp;<span class="string">"l2:&nbsp;%s\n%!"</span>&nbsp;(<span class="constructor">Z3</span>.ast_to_string&nbsp;ctx&nbsp;l2)&nbsp;;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prove&nbsp;ctx&nbsp;slv&nbsp;(<span class="constructor">Z3</span>.mk_implies&nbsp;ctx&nbsp;(<span class="constructor">Z3</span>.mk_eq&nbsp;ctx&nbsp;l1&nbsp;l2)&nbsp;(<span class="constructor">Z3</span>.mk_eq&nbsp;ctx&nbsp;u&nbsp;v))&nbsp;<span class="keyword">true</span>&nbsp;;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prove&nbsp;ctx&nbsp;slv&nbsp;(<span class="constructor">Z3</span>.mk_implies&nbsp;ctx&nbsp;(<span class="constructor">Z3</span>.mk_eq&nbsp;ctx&nbsp;l1&nbsp;l2)&nbsp;(<span class="constructor">Z3</span>.mk_eq&nbsp;ctx&nbsp;x&nbsp;y))&nbsp;<span class="keyword">true</span>&nbsp;;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;is_nil(u)&nbsp;or&nbsp;is_cons(u)&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prove&nbsp;ctx&nbsp;slv&nbsp;(<span class="constructor">Z3</span>.mk_or&nbsp;ctx&nbsp;[|<span class="constructor">Z3</span>.mk_app&nbsp;ctx&nbsp;is_nil&nbsp;[|u|];&nbsp;<span class="constructor">Z3</span>.mk_app&nbsp;ctx&nbsp;is_cons&nbsp;[|u|]|])&nbsp;<span class="keyword">true</span>&nbsp;;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">(*&nbsp;occurs&nbsp;check&nbsp;u&nbsp;!=&nbsp;cons(x,u)&nbsp;*)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prove&nbsp;ctx&nbsp;slv&nbsp;(<span class="constructor">Z3</span>.mk_not&nbsp;ctx&nbsp;(<span class="constructor">Z3</span>.mk_eq&nbsp;ctx&nbsp;u&nbsp;l1))&nbsp;<span class="keyword">true</span>&nbsp;;<br>
+<br>
+&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;_&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exitf&nbsp;<span class="string">"unexpected&nbsp;datatype&nbsp;signature"</span></code></body></html>

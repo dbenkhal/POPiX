@@ -1,0 +1,24 @@
+/***********************************/
+/* Simpson Rule                    */
+/***********************************/
+a = 0.0;
+b = 1.0;
+h = 0.05;
+pi = 3.1415922654;
+x = h;
+fa = sin(a * pi);
+s1= fa;
+fb = sin(b * pi);
+s1= s1 + fb;
+fa2 = sin((a+ h/2.0)*pi);
+s1 =s1+4.0*fa2;
+while (x<b) {
+	fun = sin(x * pi);
+	s1 = s1 + 2.0*fun ;
+	x = x + h/2.0;
+	fun = sin(x *pi);
+	s1 = s1 + 4*fun;
+	x = x + h/2.0;
+};
+s1 = s1 * h/6.0;
+require_nsb(s1,15);

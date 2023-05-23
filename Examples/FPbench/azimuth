@@ -1,0 +1,16 @@
+
+ dLon = lon2 - lon1;
+ s_lat1 = sin(lat1);
+ c_lat1 = cos(lat1);
+ s_lat2 = sin(lat2);
+ c_lat2 = cos(lat2);
+ s_dLon = sin(dLon);
+ c_dLon = cos(dLon);
+ tmp_fix_1 = c_lat2 * s_dLon;
+ tmp_fix_2 = c_lat1 * s_lat2;
+ tmp_fix_3 = c_lat2* s_lat1;
+ tmp_fix_4 = tmp_fix_3 * c_dLon;
+ tmp_fix_5 = tmp_fix_2 - tmp_fix_4;
+ tmp_fix_6 = tmp_fix_1 /tmp_fix_5;
+ res = atan(tmp_fix_6);
+ require_nsb(res,20);
