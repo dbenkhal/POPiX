@@ -20,9 +20,9 @@ To use POPiX, you must install the following dependencies:
 
 - JAVA SE version 19 or latest 
 - The following jar Files :
- - [ANTLR](https://www.antlr.org/download.html) generator parser version 4.7.2 or latest
- - [GLPK](https://glpk-java.sourceforge.net/gettingStarted.html) solver version 4.65 or latest 
- - [FixMath](http://download.savannah.nongnu.org/releases/fixmath/)  Library version 1.4 (User manual 🔗 https://www.nongnu.org/fixmath/doc/index.html)
+  - [ANTLR](https://www.antlr.org/download.html) generator parser version 4.7.2 or latest
+  - [GLPK](https://glpk-java.sourceforge.net/gettingStarted.html) solver version 4.65 or latest 
+  - [FixMath](http://download.savannah.nongnu.org/releases/fixmath/)  Library version 1.4 (User manual 🔗 https://www.nongnu.org/fixmath/doc/index.html)
  
 
 
