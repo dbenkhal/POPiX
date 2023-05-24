@@ -58,7 +58,7 @@ If you would like to test other examples, the programs must follow the grammar t
 ## Result Metrics
 
 In addition to the generated files, the POPiX metrics after tuning will be displayed directly on the console. You will find:
-- Information about the LP solver, including the number of constraints/variables in the solver and whether an optimal solution was found 
+- Information about the LP solver: number of constraints/variables in the solver and whether an optimal solution was found 
 - Total number of bits before/after tuning at bit-level
 - % of optimization at bit-level and in IEEE754 formats (FP16, FP32, FP64, FP128, FPxx)
  - Execution time measurements for each step of the POPiX workflow
