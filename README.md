@@ -66,7 +66,7 @@ In addition to the generated files, the **POPiX** metrics after tuning will be d
 
  ## :bookmark_tabs: Cite This Work
  
-**POPiX** version 1.0 is already available at [![GitHub release](https://img.shields.io/github/release/Naereen/StrapDown.js.svg)](https://github.com/sbessai/popix)
+**POPiX** version 1.0 is already available at [![GitHub release](https://img.shields.io/github/release/Naereen/StrapDown.js.svg)](https://github.com/sbessai/popix).
 Please cite our paper in the 15th Workshop on Design and Architectures for Signal and Image Processing (DASIP'22).
 ```
 @inproceedings{BessaiKBM22,
