@@ -29,16 +29,29 @@ To use POPiX, you must install the following dependencies:
 ## :hammer: Running the Example
 
    - Go inside examples folder, choose an example and copy its code to the file ```popix_src```.
-   - Next, open ```main.java``` add your POPiX  Path at line 15, and the path of the fixed-point library at Line  
+   - Next, open ```main.java``` add your the POPiX pPath on your machine at line 15, and the path of the fixed-point library at Line 208 
    
-   - Compile the program with the following command
+   - Compile POPiX with the following command
     
  ```   
 javac -cp  /path/to/.jars *.java  src/Boolean/*.java src/Constraint/*.java src/Expression/*.java src/Number/*.java src/Statement/*.java src/Main.java src/Util/*.java
 ```
-
+-  Now you can run POPiX to tune precision of the program in  ```popix_src``` using the following command.
+ ```  
+ cd src 
+ java -cp /path/to/.jars:. Main
+```
+   
 
 ## Generated Files
+Once the execution process is done successfully, this will generate the follwowing files:
+-  ```popix_lab```:   program source annotated with  different labels at node of the AST
+-   ```constraints```: prints the semantic equations generated for the program  source
+-    ```popix_output```: Optimized program annotated with the couple |ufp, nsb| where ufp is the weight of the smost ignificant bit of the variable and nsb is optimized precision returned by POPiX
+-     ```popix_float.py```: MPFR  code to create a program that gives an exact result   (i.e. 500 bits)
+-     ```popix_mpfr.py```: MPFR code generated with the optimized precisions returned by our POPiX
+-      ```popix_output.c```:  fixed-point program written in C with the fixed-point library instructions
+
 
  ## :bookmark_tabs: Cite This Work
  
