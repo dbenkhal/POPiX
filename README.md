@@ -4,12 +4,12 @@
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white) ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![C](https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white)
 
 
-POPIX a precision tuning framework  with the new functionality of generating fixed- point formats. It returns solutions suitable – at bit-level – for the IEEE-754 floating-point arithmetic, the fixed-point arithmetic, and the MPFR library for non-standard precision.
+POPIX a precision tuning framework  with the new feature of generating fixed- point formats. It returns solutions suitable – at bit-level – for the IEEE-754 floating-point arithmetic, the fixed-point arithmetic, and the MPFR library for non-standard precision.
 
 
 ## :bulb: Features
- - Analyzes a program written in an IMP language and annotated with the precision desired by the user on the output
- - Produces an under-approximation of the ranges of the variables by dynamic analysis
+ - Analyzes a program written in a c-like language annotated with the precision desired by the user on the output
+ - Produces an under-approximation of the ranges of the variables by dynamic analysis (10000 runs)
  - Generates and solves an ILP problem based on a semantic modelling of the numerical errors propagation  
  - Finds the minimal number of bits needed at bit-level and in floating-point arithmetic with an accuracy guarantee on the result
  - Internally calls a fixed-point library to convert the associated indications into ones that exploit fixed-point computations
@@ -41,18 +41,27 @@ javac -cp  /path/to/.jars *.java  src/Boolean/*.java src/Constraint/*.java src/E
  cd src 
  java -cp /path/to/.jars:. Main
 ```
+ - To modify the user's accuracy requirement or the output variable, it is enough to modify it directly in the *require_nsb(variable, nb_bits)* statement which is usually the last line of each of our programs. 
    
 
 ## Generated Files
 Once the execution process is done successfully, this will generate the follwowing files:
--  ```popix_lab```:   program source annotated with  control points at each node of the AST
--  ```constraints```: prints the semantic equations generated for the program  source
--  ```popix_output```: Optimized program annotated with the couple *|ufp, nsb|* where *ufp* is the weight of the most ignificant bit of the variable and *nsb* is the optimized precision returned by POPiX
+-  ```popix_lab```:   program source annotated with control points at each node of the AST
+-  ```constraints```: prints the semantic equations generated for the program source
+-  ```popix_output```: Optimized program annotated with the couple *|ufp, nsb|* where *ufp* is the weight of the most ignificant bit of the variable and *nsb* is the optimized precision returned by POPiX (at bit-level)
 - ```popix_float.py```: MPFR  code to create a program that gives an exact result   (i.e. 500 bits)
 - ```popix_mpfr.py```: MPFR code generated with the optimized precisions returned by our POPiX
 - ```popix_output.c```:  fixed-point program written in C with the fixed-point library instructions
 
 If you would like to test other examples, the programs must follow the grammar that implements the POPiX language. The grammar is available in the file [Grammaire.g4](/Grammaire.g4).
+
+## Result Metrics
+
+In addition to the generated files, the POPiX metrics after tuning will be displayed directly on the console. You will find:
+- Information about the LP solver, including the number of constraints/variables in the solver and whether an optimal solution was found 
+- Total number of bits before/after tuning at bit-level
+- % of optimization at bit-level and in IEEE754 formats (FP16, FP32, FP64, FP128, FPxx)
+ - Execution time measurements for each step of the POPiX workflow
 
  ## :bookmark_tabs: Cite This Work
  
