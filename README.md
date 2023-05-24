@@ -4,7 +4,7 @@
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white) ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![C](https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white)
 
 
-POPIX a precision tuning framework  with the new feature of generating fixed- point formats. It returns solutions suitable – at bit-level – for the IEEE-754 floating-point arithmetic, the fixed-point arithmetic, and the MPFR library for non-standard precision.
+**POPIX** a precision tuning framework  with the new feature of generating fixed- point formats. It returns solutions suitable – at bit-level – for the IEEE-754 floating-point arithmetic, the fixed-point arithmetic, and the MPFR library for non-standard precision.
 
 
 ## :bulb: Features
@@ -16,7 +16,7 @@ POPIX a precision tuning framework  with the new feature of generating fixed- po
 
 ## :wrench: Prerequisites
 
-To use POPiX, you must install the following dependencies:
+To use **POPiX**, you must install the following dependencies:
 
 - JAVA SE version 19 or latest 
 - The following jar Files :
