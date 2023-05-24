@@ -52,6 +52,8 @@ Once the execution process is done successfully, this will generate the follwowi
 - ```popix_mpfr.py```: MPFR code generated with the optimized precisions returned by our POPiX
 - ```popix_output.c```:  fixed-point program written in C with the fixed-point library instructions
 
+If you would like to test other examples, the programs must follow the grammar that implements the POPiX language of programs that you can consult in the file  ```grammaire.g4 ```
+
  ## :bookmark_tabs: Cite This Work
  
 POPiX version 1.0 is already available at [![GitHub release](https://img.shields.io/github/release/Naereen/StrapDown.js.svg)](https://github.com/sbessai/popix)
