@@ -10,9 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
 
-	// static String mypath = new String("C:\\Users\\DORRA\\eclipse-workspace\\POP
-	// Tool\\");
-	static String mypath = new String("/home/dbenkhal/git/POP_TOOL_v3.0/POP Tool/");
+	static String mypath = new String(" change with POPiX Path here");
 
 	private static void copyFileUsingStream(File source, File dest) throws IOException {
 
@@ -36,7 +34,7 @@ public class Main {
 		long startTimeParsing = System.nanoTime();
 		System.out.println("** Welcome to POPiX, Precision OPtimizer for Fixed-Point Ciode Synthesis...");
 		System.out.println("** POPiX version 2.0, May 2023...\n");
-		File fich = new File(mypath + "pop_src");
+		File fich = new File(mypath + "popix_src");
 		FileInputStream file = new FileInputStream(fich);
 		@SuppressWarnings("deprecation")
 		ANTLRInputStream input = new ANTLRInputStream(file);
@@ -57,11 +55,11 @@ public class Main {
 		int ctr = 0;
 		Long startZ3 = null;
 		// *******************************************************
-		// ecriture d prog avec labels
+		// Program with labels 
 		// *******************************************************
 		try {
 			int indent = 1;
-			String ProgLab = "pop_labs";
+			String ProgLab = "popix_labs";
 			FileWriter test2 = new FileWriter(ProgLab);
 			BufferedWriter out2 = new BufferedWriter(test2);
 			out2.write(program.toStringLab(indent));
@@ -70,14 +68,16 @@ public class Main {
 			;
 		}
 		// *******************************************************
-		// evaluation du programme
+		// Program Evaluation with 10000 run
 		// *******************************************************
 		long startTimeEvaluation = System.nanoTime();
 		Long startEvaluation = null;
 		System.out.println("Starting dynamic analysis...");
 		startEvaluation = System.nanoTime();
-		////////////// TAFFO
-		//////////// Evaluation//////////////////////////////////////////////////////
+
+		// *******************************************************
+		// commented part to read files with input values 
+		// *******************************************************
 //		String TAFFOData = "/home/dbenkhal/Bureau/TAFFO/data/Doppler1";
 //		FileReader TAFFOTest = new FileReader(TAFFOData);
 //		BufferedReader inTAFFO = new BufferedReader(TAFFOTest);
@@ -126,15 +126,16 @@ public class Main {
 //		resultatFix = resTheta / 10000;
 //		// System.out.println("Theta final\n"+resultatFix);
 //		TAFFOFloatData.close();
+		
 		long endTimeEvaluation = System.nanoTime();
 		long timeElapsedEvaluation = endTimeEvaluation - startTimeEvaluation;
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		// Code before the 10000 runs of TAFFO
+
+		
 		for (int i = 0; i < 10000; i++) {
 			program.evaluate(env);
 		}
 		// *******************************************************
-		// generation des contraintes
+		// Constraints Generation Phase
 		// *******************************************************
 		int initTotalBits = 0;
 		Long startTime = null;
@@ -163,13 +164,13 @@ public class Main {
 		}
 		;
 		// *******************************************************
-		// Solving
+		// Constraints Solving Phase with GLPK
 		// *******************************************************
 		long startTimeSolve = System.nanoTime();
 		ConstraintsSet cs = new Constraints();
 		cs.solveIP();
 		try {
-			String IpCstr = "Constraints";
+			String IpCstr = "constraints";
 			FileWriter IpTest = new FileWriter(IpCstr);
 			Iterator<ConstraintsSet> it = ConstraintsSet.allCst.iterator();
 			BufferedWriter sortie = new BufferedWriter(IpTest);
@@ -183,7 +184,7 @@ public class Main {
 
 		try {
 			int indent = 1;
-			String ProgRes = "pop_output";
+			String ProgRes = "popix_output";
 			FileWriter test2 = new FileWriter(ProgRes);
 			BufferedWriter out2 = new BufferedWriter(test2);
 			out2.write(program.toStringRes(indent, AbstractClass.resultEnv));
@@ -194,13 +195,16 @@ public class Main {
 		long endTimeSolve = System.nanoTime();
 		long timeElapsedSolve = endTimeSolve - startTimeSolve;
 
-		/* Fixed code in C */
+		// *******************************************************
+		//Fixed-point program in C
+		// *******************************************************
 		long startTimeFixed = System.nanoTime();
 		try {
 			int indent = 1;
 			String ProgRes = "popix_output.c";
 			FileWriter test2 = new FileWriter(ProgRes);
 			BufferedWriter out2 = new BufferedWriter(test2);
+		//Remember to change the path to the fixmath library
 			out2.write("#include \"/home/dbenkhal/Documents/fixmath-1.4/include/fixmath.h\"\n");
 			out2.write("#include <stdio.h>\n");
 			out2.write("#include <math.h>\n");
@@ -208,9 +212,9 @@ public class Main {
 			out2.write("int main(){ \n");
 			Iterator<String> itFix = AbstractClass.outputProgVarList.iterator();
 			while (itFix.hasNext()) {
-				out2.write(" volatile int " + itFix.next().toString() + ";\n");
+				out2.write("volatile int " + itFix.next().toString() + ";\n");
 			}
-			out2.write(" volatile int POPxxx;" + "\n");
+			out2.write("volatile int POPxxx;" + "\n");
 			out2.write(program.toStringFix(indent, AbstractClass.resultEnv));
 //			out2.write("error += fabs("+env.getValue(AbstractClassS.require_var_name)+"-fx_xtof("
 //			+ AbstractClassS.require_var_name +","+AbstractClass.fixFinalPrec+"));\n"); 
@@ -243,21 +247,19 @@ public class Main {
 			Process p = builder.start(); // may throw IOException
 			ProcessBuilder execute = new ProcessBuilder(mypath + "./a.out");
 			p.waitFor();
-			long endTimeCompile = System.nanoTime();
-			////////// compile time floating-point codes in C///////////////////////////
+			long endTimeCompile = System.nanoTime();			
+		// *******************************************************
+		//compile time floating-point codes in C
+		// *******************************************************
 			long startTimeCompileC = System.nanoTime();
 			ProcessBuilder builderC = new ProcessBuilder("clang", "-O3", mypath + "pop_input.c");
 			Process pC = builder.start(); // may throw IOException
 			p.waitFor();
 			long endTimeCompileC = System.nanoTime();
 			long timeElapsedC = endTimeCompileC - startTimeCompileC;
-			///////////////////////////////////////////////////////////////////////////
 			timeElapsedCompile = endTimeCompile - startTimeCompile;
 			System.out.println("===================================");
-			System.out.println("Compilation time Program C in milliseconds: " + timeElapsedC);
 			System.out.println("timeElapsedParsing: " + timeElapsedParsing);
-			// System.out.println("timeElapsedParsing: " + (timeElapsedParsing * 100 /
-			// timeElapsedC));
 			System.out.println("timeElapsedEvaluation: " + (timeElapsedEvaluation));
 			System.out.println("timeElapsedILP: " + timeElapsedILP);
 			System.out.println("timeElapsedSolve: " + (timeElapsedSolve));
@@ -267,10 +269,12 @@ public class Main {
 			System.out.println("erreur d'execution " + "clang fichierz3.smt2" + e.toString());
 		}
 
-		/* mpfr files */
+	       // *******************************************************
+		// MPFR Files
+		// *******************************************************
 
 		try {
-			String ProgOrig = "pop_float.py";
+			String ProgOrig = "popix_float.py";
 			FileWriter test3 = new FileWriter(ProgOrig);
 			BufferedWriter out3 = new BufferedWriter(test3);
 			out3.write("import gmpy2\nfrom gmpy2 import mpfr\nfrom gmpy2 import xmpz\n" + "\n"
@@ -280,7 +284,7 @@ public class Main {
 			;
 		}
 		try {
-			String ProgMpfr = "pop_mpfr.py";
+			String ProgMpfr = "popix_mpfr.py";
 			FileWriter test4 = new FileWriter(ProgMpfr);
 			BufferedWriter out4 = new BufferedWriter(test4);
 			out4.write("import gmpy2\nfrom gmpy2 import mpfr\nfrom gmpy2 import xmpz\n" + "\n"
@@ -570,15 +574,15 @@ public class Main {
 		// *******************************************************
 		// affichage resultats
 		// *******************************************************
-		System.out.println("Number of Z3 variables �: " + AbstractClass.z3ConstInt.size());
+		System.out.println("Number of Z3 variables : " + AbstractClass.z3ConstInt.size());
 		System.out.println("Number of Z3 constraints: " + Constraints.allCst.size() + "\n");
-		System.out.println("Total number of bits before optimization � : " + initTotalBits2);
+		System.out.println("Total number of bits before optimization  : " + initTotalBits2);
 		System.out.println("Total number of bits after optimization (1): " + totalbits);
 		System.out.println("Total number of bits after optimization (2): " + x.getIntValue());
 		System.out.println("Number of declared variables optimized: " + env.size());
 		try {
 			int indent = 1;
-			String ProgRes = "pop_output";
+			String ProgRes = "popix_output";
 			FileWriter test2 = new FileWriter(ProgRes);
 			BufferedWriter out2 = new BufferedWriter(test2);
 			out2.write(program.toStringRes(indent, AbstractClass.resultEnv));
@@ -600,7 +604,7 @@ public class Main {
 
 		}
 		try {
-			String IpCstr = "Constraints.txt";
+			String IpCstr = "constraints";
 			FileWriter IpTest = new FileWriter(IpCstr);
 			Iterator<ConstraintsSet> it = ConstraintsSet.allCst.iterator();
 			BufferedWriter sortie = new BufferedWriter(IpTest);
