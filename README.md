@@ -8,9 +8,9 @@ POPIX a precision tuning framework  with the new functionality of generating fix
 
 
 ## :bulb: Features
- - Analyzes a program written in an IMP language and annotated with the precision desired by the user on the output.
+ - Analyzes a program written in an IMP language and annotated with the precision desired by the user on the output
  - Produces an under-approximation of the ranges of the variables by dynamic analysis
- - Generates and solves an ILP problem based on a semantic modelling of the numerical errors propagation  throughout the program source
+ - Generates and solves an ILP problem based on a semantic modelling of the numerical errors propagation  
  - Finds the minimal number of bits needed at bit-level and in floating-point arithmetic with an accuracy guarantee on the result
  - Internally calls a fixed-point library to convert the associated indications into ones that exploit fixed-point computations
 
