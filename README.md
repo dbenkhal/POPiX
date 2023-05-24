@@ -55,7 +55,7 @@ Once the execution process is done successfully, this will generate the follwowi
  ## :bookmark_tabs: Cite This Work
  
 POPiX version 1.0 is already available at [![GitHub release](https://img.shields.io/github/release/Naereen/StrapDown.js.svg)](https://github.com/sbessai/popix)
-Please cite our paper in the the  15th Workshop on Design and Architectures for Signal and Image Processing (DASIP'22).
+Please cite our paper in the 15th Workshop on Design and Architectures for Signal and Image Processing (DASIP'22).
 ```
 @inproceedings{BessaiKBM22,
   author       = {Sofiane Bessa{\"{\i}} and
