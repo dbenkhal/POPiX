@@ -28,7 +28,7 @@ To use POPiX, you must install the following dependencies:
 
 ## :hammer: Running the Example
 
-   - Go inside ``Examples`` folder, choose an example and copy its code to the file ```popix_src```.
+   - Go inside [Examples](/Examples) folder, choose an example and copy its code to the file ```popix_src```.
    - Next, open ```main.java``` add your the POPiX path on your machine at Line 15, and the path of the fixed-point library at Line 208 
    
    - Compile POPiX with the following command
@@ -52,7 +52,7 @@ Once the execution process is done successfully, this will generate the follwowi
 - ```popix_mpfr.py```: MPFR code generated with the optimized precisions returned by our POPiX
 - ```popix_output.c```:  fixed-point program written in C with the fixed-point library instructions
 
-If you would like to test other examples, the programs must follow the grammar that implements the POPiX language. The grammar is available in the file [grammaire.g4](/Grammaire.g4).
+If you would like to test other examples, the programs must follow the grammar that implements the POPiX language. The grammar is available in the file [Grammaire.g4](/Grammaire.g4).
 
  ## :bookmark_tabs: Cite This Work
  
