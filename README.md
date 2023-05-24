@@ -16,6 +16,14 @@ POPIX a precision tuning framework  with the new functionality of generating fix
 
 ## :wrench: Prerequisites
 
+To use POPiX you nedd to install the following :
+- JAVA SE version 19 or latest 
+- The following jar Files :
+ - [ANTLR] (https://www.antlr.org/download.html) generator parser version 4.7.2 or latest (avauilable at: )
+ - [GLPK] (https://glpk-java.sourceforge.net/gettingStarted.html) solver version 4.65 or latest (available at: 
+ - [FixMath] (http://download.savannah.nongnu.org/releases/fixmath/)  Library version 1.4 (User manual 🔗 https://www.nongnu.org/fixmath/doc/index.html)
+ 
+
 
 ## :hammer: Compilation
 
