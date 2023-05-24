@@ -16,7 +16,8 @@ POPIX a precision tuning framework  with the new functionality of generating fix
 
 ## :wrench: Prerequisites
 
-To use POPiX you nedd to install the following :
+To use POPiX, you must install the following dependencies:
+
 - JAVA SE version 19 or latest 
 - The following jar Files :
  - [ANTLR](https://www.antlr.org/download.html) generator parser version 4.7.2 or latest (avauilable at: )
