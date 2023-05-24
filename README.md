@@ -26,7 +26,11 @@ To use POPiX, you must install the following dependencies:
  
 
 
-## :hammer: Compilation
+## :hammer: Running the Example
+
+   - Go inside examples folder, choose an example and copy its code to the file <popix_src>.
+    Compile the program with the following command
+
 
 
 ## Generated Files
