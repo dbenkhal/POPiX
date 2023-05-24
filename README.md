@@ -28,8 +28,8 @@ To use POPiX, you must install the following dependencies:
 
 ## :hammer: Running the Example
 
-   - Go inside examples folder, choose an example and copy its code to the file ```popix_src```.
-   - Next, open ```main.java``` add your the POPiX pPath on your machine at line 15, and the path of the fixed-point library at Line 208 
+   - Go inside ``Examples`` folder, choose an example and copy its code to the file ```popix_src```.
+   - Next, open ```main.java``` add your the POPiX path on your machine at Line 15, and the path of the fixed-point library at Line 208 
    
    - Compile POPiX with the following command
     
