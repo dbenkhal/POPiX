@@ -46,12 +46,11 @@ javac -cp  /path/to/.jars *.java  src/Boolean/*.java src/Constraint/*.java src/E
 ## Generated Files
 Once the execution process is done successfully, this will generate the follwowing files:
 -  ```popix_lab```:   program source annotated with  different labels at node of the AST
--   ```constraints```: prints the semantic equations generated for the program  source
--    ```popix_output```: Optimized program annotated with the couple |ufp, nsb| where ufp is the weight of the smost ignificant bit of the variable and nsb is optimized precision returned by POPiX
--     ```popix_float.py```: MPFR  code to create a program that gives an exact result   (i.e. 500 bits)
--     ```popix_mpfr.py```: MPFR code generated with the optimized precisions returned by our POPiX
--      ```popix_output.c```:  fixed-point program written in C with the fixed-point library instructions
-
+-  ```constraints```: prints the semantic equations generated for the program  source
+-  ```popix_output```: Optimized program annotated with the couple |ufp, nsb| where ufp is the weight of the smost ignificant bit of the variable and nsb is optimized precision returned by POPiX
+- ```popix_float.py```: MPFR  code to create a program that gives an exact result   (i.e. 500 bits)
+-```popix_mpfr.py```: MPFR code generated with the optimized precisions returned by our POPiX
+- ```popix_output.c```:  fixed-point program written in C with the fixed-point library instructions
 
  ## :bookmark_tabs: Cite This Work
  
