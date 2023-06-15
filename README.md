@@ -36,7 +36,7 @@ To use **POPiX**, you must install the following dependencies:
  ```   
 javac -cp  /path/to/.jars *.java  src/Boolean/*.java src/Constraint/*.java src/Expression/*.java src/Number/*.java src/Statement/*.java src/Main.java src/Util/*.java
 ```
--  Now you can run **POPiX** to tune precision of the program in  ```popix_src``` using the following command.
+-  Now you can run **POPiX** to tune precision of the program in  ```popix_src``` using the following command
  ```  
  cd src 
  java -cp /path/to/.jars:. Main
