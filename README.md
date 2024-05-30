@@ -34,20 +34,20 @@ To use **POPiX**, you must install the following dependencies:
    - Compile **POPiX** with the following commands
 
  ``` 
- java -cp /path/to/antlr.jar org.antlr.v4.Tool -Dlanguage=Java *.g4
+ java -cp /path-to-antlr-jar org.antlr.v4.Tool -Dlanguage=Java *.g4
   
-javac -cp  /path/to/.jars *.java  src/Boolean/*.java src/Constraint/*.java src/Expression/*.java src/Number/*.java src/Statement/*.java src/Main.java src/Util/*.java
+javac -cp  /path-to-jars *.java  src/Boolean/*.java src/Constraint/*.java src/Expression/*.java src/Number/*.java src/Statement/*.java src/Main.java src/Util/*.java
 ```
 -  Now you can run **POPiX** to tune precision of the program in  ```popix_src``` using the following command
  ```  
  cd src 
- java -cp /path/to/.jars:. Main
+ java -cp /path-to-jars/:. Main
 ```
-    ``` 
- java -cp /path-to-jars/:/path-togenerated-Grammaire-files/:. Main
-  ```
-- if you encounter some compilation error, try to add the path to generated Grammar files to the classpath
 
+- if you encounter some compilation error, try to add the path to generated Grammar files to the classpath
+    ``` 
+    java -cp /path-tojars/:/path-to-generated-Grammaire-files/:.Main
+  ```
 
  - To modify the user's accuracy requirement or the output variable, it is enough to modify it directly in the *require_nsb(variable, nb_bits)* statement which is usually the last line of each of our programs. 
    
