@@ -75,9 +75,19 @@ In addition to the generated files, the **POPiX** metrics after tuning will be d
  ## :bookmark_tabs: Cite This Work
  
 **POPiX** version 1.0 is already available at [![GitHub release](https://img.shields.io/github/release/Naereen/StrapDown.js.svg)](https://github.com/sbessai/popix).
-Please cite our PoPix articles (CoDit'24, CF'24, CoDIT'23, DASIP'22).
+Please cite our PoPix articles ( $CF'24, CoDIT'23, DASIP'22).
 ```
-@inproceedings{KhalifaM23,
+@inproceedings{KhalifaM24,
+  author       = {Dorra {Ben Khalifa} and
+                  Matthieu Martel},
+  title        = {Compile-Time Optimization of the Energy Consumption of Numerical Computations},
+  booktitle    = {Proceedings of the 21th ACM International Conference on Computing Frontiers, CF 2024},
+  pages        = {},
+  publisher    = {{ACM}},
+  year         = {2024}
+}
+
+@inproceedings{KhalifaM24b,
   author       = {Dorra {Ben Khalifa} and
                   Matthieu Martel},
   title        = {On the Functional Properties of Automatically Generated Fixed-Point
@@ -89,8 +99,17 @@ Please cite our PoPix articles (CoDit'24, CF'24, CoDIT'23, DASIP'22).
   year         = {2023}
 }
 
-
-
+@inproceedings{KhalifaM23,
+  author       = {Dorra {Ben Khalifa} and
+                  Matthieu Martel},
+  title        = {On the Functional Properties of Automatically Generated Fixed-Point
+                  Controllers},
+  booktitle    = {9th International Conference on Control, Decision and Information
+                  Technologies, CoDIT},
+  pages        = {786--791},
+  publisher    = {{IEEE}},
+  year         = {2023}
+}
 
 @inproceedings{BessaiKBM22,
   author       = {Sofiane Bessa{\"{\i}} and
