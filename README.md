@@ -45,9 +45,7 @@ javac -cp  /path/to/.jars *.java  src/Boolean/*.java src/Constraint/*.java src/E
 ```
 - if you encounter some compilation error, try to add the path to generated Grammar files to the classpath
 
-    ``` 
- java -cp /path-to-jars/:/path-togenerated-Grammaire-files/:. Main
-  ```
+
  - To modify the user's accuracy requirement or the output variable, it is enough to modify it directly in the *require_nsb(variable, nb_bits)* statement which is usually the last line of each of our programs. 
    
 
