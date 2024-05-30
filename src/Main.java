@@ -222,10 +222,8 @@ public class Main {
 //			out2.write("error += fabs(floatResult-fx_xtof(" + AbstractClassS.require_var_name + ","
 //					+ AbstractClass.fixFinalPrec + ")/fabs(floatResult));\n");
 
-			out2.write("printf(\"Float : " + AbstractClassS.require_var_name + " = "
-					+ env.getValue(AbstractClassS.require_var_name) + "\\n\");\n");
-			out2.write("printf(\"Fix   : " + AbstractClassS.require_var_name + "= %f\\n\",fx_xtof("
-					+ AbstractClassS.require_var_name + "," + AbstractClass.fixFinalPrec + "));\n");
+//			out2.write("printf(\"Float : " + AbstractClassS.require_var_name + " = "+ env.getValue(AbstractClassS.require_var_name) + "\\n\");\n");
+//			out2.write("printf(\"Fix   : " + AbstractClassS.require_var_name + "= %f\\n\",fx_xtof("+ AbstractClassS.require_var_name + "," + AbstractClass.fixFinalPrec + "));\n");
 			out2.write("return 0;\n} \n");
 			out2.close();
 		} catch (IOException er) {
