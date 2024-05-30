@@ -35,12 +35,11 @@ To use **POPiX**, you must install the following dependencies:
 
  ``` 
  java -cp /path-to-antlr-jar org.antlr.v4.Tool -Dlanguage=Java *.g4
-  
-javac -cp  /path-to-jars *.java  src/Boolean/*.java src/Constraint/*.java src/Expression/*.java src/Number/*.java src/Statement/*.java src/Main.java src/Util/*.java
+ javac -cp  /path-to-jars *.java  src/Boolean/*.java src/Constraint/*.java src/Expression/*.java src/Number/*.java src/Statement/*.java src/Main.java src/Util/*.java
 ```
 -  Now you can run **POPiX** to tune precision of the program in  ```popix_src``` using the following command
  ```  
- cd src 
+ cd src
  java -cp /path-to-jars/:. Main
 ```
 
@@ -86,8 +85,6 @@ Please cite our PoPix articles ( $CF'24, CoDIT'23, DASIP'22).
   publisher    = {{ACM}},
   year         = {2024}
 }
-
-
 
 @inproceedings{KhalifaM23,
   author       = {Dorra {Ben Khalifa} and
