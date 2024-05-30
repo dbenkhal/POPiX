@@ -87,17 +87,7 @@ Please cite our PoPix articles ( $CF'24, CoDIT'23, DASIP'22).
   year         = {2024}
 }
 
-@inproceedings{KhalifaM24b,
-  author       = {Dorra {Ben Khalifa} and
-                  Matthieu Martel},
-  title        = {On the Functional Properties of Automatically Generated Fixed-Point
-                  Controllers},
-  booktitle    = {9th International Conference on Control, Decision and Information
-                  Technologies, CoDIT},
-  pages        = {786--791},
-  publisher    = {{IEEE}},
-  year         = {2023}
-}
+
 
 @inproceedings{KhalifaM23,
   author       = {Dorra {Ben Khalifa} and
