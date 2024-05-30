@@ -43,6 +43,9 @@ javac -cp  /path/to/.jars *.java  src/Boolean/*.java src/Constraint/*.java src/E
  cd src 
  java -cp /path/to/.jars:. Main
 ```
+    ``` 
+ java -cp /path-to-jars/:/path-togenerated-Grammaire-files/:. Main
+  ```
 - if you encounter some compilation error, try to add the path to generated Grammar files to the classpath
 
 
