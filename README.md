@@ -75,8 +75,23 @@ In addition to the generated files, the **POPiX** metrics after tuning will be d
  ## :bookmark_tabs: Cite This Work
  
 **POPiX** version 1.0 is already available at [![GitHub release](https://img.shields.io/github/release/Naereen/StrapDown.js.svg)](https://github.com/sbessai/popix).
-Please cite our paper in the 15th Workshop on Design and Architectures for Signal and Image Processing (DASIP'22).
+Please cite our PoPix articles (CoDit'24, CF'24, CoDIT'23, DASIP'22).
 ```
+@inproceedings{KhalifaM23,
+  author       = {Dorra {Ben Khalifa} and
+                  Matthieu Martel},
+  title        = {On the Functional Properties of Automatically Generated Fixed-Point
+                  Controllers},
+  booktitle    = {9th International Conference on Control, Decision and Information
+                  Technologies, CoDIT},
+  pages        = {786--791},
+  publisher    = {{IEEE}},
+  year         = {2023}
+}
+
+
+
+
 @inproceedings{BessaiKBM22,
   author       = {Sofiane Bessa{\"{\i}} and
                   Dorra {Ben Khalifa} and
