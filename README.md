@@ -74,7 +74,7 @@ In addition to the generated files, the **POPiX** metrics after tuning will be d
  ## :bookmark_tabs: Cite This Work
  
 **POPiX** version 1.0 is already available at [![GitHub release](https://img.shields.io/github/release/Naereen/StrapDown.js.svg)](https://github.com/sbessai/popix).
-Please cite our PoPix articles ( $CF'24, CoDIT'23, DASIP'22).
+Please cite our PoPix articles (CF'24, CoDIT'23, DASIP'22).
 ```
 @inproceedings{KhalifaM24,
   author       = {Dorra {Ben Khalifa} and
